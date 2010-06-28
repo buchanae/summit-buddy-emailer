@@ -13,6 +13,7 @@ filename = sys.argv[1]
 reader = csv.reader(open(filename, "rb"))
 
 from_address = 'Mozilla Summit 2010 <summit2010@mozilla.com>'
+subject = 'Hey Mozilla Summiteer, meet your Buddy!'
 content = """
 Welcome {recipient} and {buddy} to the Mozilla Summit 2010 Buddy Program.   We've
 got some great fun lined up for you two in Whistler. (More on that in an
@@ -40,12 +41,12 @@ s = smtplib.SMTP()
 s.connect()
 
 for row in reader:
-    r_first, r_last, r_email, b_first, b_last, b_email = row
+    r_email, r_first, r_last, b_email, b_first, b_last = row
     r_full = ' '.join((r_first, r_last))
     b_full = ' '.join((b_first, b_last))
     msg_text = content.format(recipient=r_full, buddy=b_full)
     msg = MIMEText(msg_text)
-    msg['Subject'] = 'Summit Buddies'
+    msg['Subject'] = subject
     msg['From'] = from_address
     msg['To'] = r_email
     msg['Cc'] = b_email
