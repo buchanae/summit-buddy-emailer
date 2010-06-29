@@ -50,6 +50,7 @@ for row in reader:
     msg['From'] = from_address
     msg['To'] = r_email
     msg['Cc'] = b_email
+    msg.set_charset('utf-8')
     s.sendmail(from_address, [r_email, b_email], msg.as_string())
 
 s.quit()
